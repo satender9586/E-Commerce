@@ -5,12 +5,14 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import connectDB from "./Config/db.js"
 import authroutes from "./routes/authroutes.js"
+import cors from "cors"
 
 dotenv.config();
-const PORT = 9089;
+
 
 connectDB()
 // middleware
+app.use(cors())
 app.use(express.json());
 app.use(morgan('dev'))
 
