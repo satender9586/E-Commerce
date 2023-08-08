@@ -11,14 +11,14 @@ const About = () => {
     console.log(datas)
     return (
         <Layout>
-            <Box pb={"2rem"}>
+            <Box p={"0 5%"} pb={"2rem"} bg={"whatsapp.100"}>
                 <Box py={"2rem"}>
-                    <Text fontSize={"25px"} fontWeight={"500"}>About The SunShine Company</Text>
-                    <Text fontWeight={"400"} color={"wheat.200"}>Once upon a time, in a small town, there was a passionate and ambitious entrepreneur named Emily. Inspired by her love for fashion and a desire to make shopping more enjoyable for everyone, Emily decided to start her own ecommerce venture called "Sunshine Ecommerce Company."</Text>
-                    <Text mt={"0.5rem"} fontSize={"20px"} fontWeight={"400"}>Goal</Text>
-                    <Text color={"wheat.200"}>The goal of Sunshine Ecommerce Company was simple yet impactful—to bring a ray of sunshine into people's lives through a delightful shopping experience. Emily believed that shopping should be more than just transactions; it should be a way for customers to express themselves, feel confident, and discover unique products that brighten their days.</Text>
-                    <Text mt={"0.5rem"} fontSize={"20px"} fontWeight={"400"}>Purpose</Text>
-                    <Text color={"wheat.200"}>With every sunrise, Sunshine Ecommerce Company continued to grow and touch the lives of more people. Emily's unwavering dedication, combined with her team's passion, made it a beacon of hope in the world of ecommerce. The Sunshine Ecommerce Company had become more than just a business; it was a movement that celebrated fashion, sustainability, and the joy of living life to the fullest—all under the warm embrace of the sun.</Text>
+                    <Text fontSize={"25px"} fontWeight={"700"}>About The SunShine Company</Text>
+                    <Text mt={"0.5rem"} fontWeight={"400"} color={"wheat.200"}>Once upon a time, in a small town, there was a passionate and ambitious entrepreneur named Emily. Inspired by her love for fashion and a desire to make shopping more enjoyable for everyone, Emily decided to start her own ecommerce venture called "Sunshine Ecommerce Company."</Text>
+                    <Text fontSize={"20px"} fontWeight={"500"}>Goal</Text>
+                    <Text mt={"0.5rem"} color={"wheat.200"}>The goal of Sunshine Ecommerce Company was simple yet impactful—to bring a ray of sunshine into people's lives through a delightful shopping experience. Emily believed that shopping should be more than just transactions; it should be a way for customers to express themselves, feel confident, and discover unique products that brighten their days.</Text>
+                    <Text fontSize={"20px"} fontWeight={"500"}>Purpose</Text>
+                    <Text mt={"0.5rem"} color={"wheat.200"}>With every sunrise, Sunshine Ecommerce Company continued to grow and touch the lives of more people. Emily's unwavering dedication, combined with her team's passion, made it a beacon of hope in the world of ecommerce. The Sunshine Ecommerce Company had become more than just a business; it was a movement that celebrated fashion, sustainability, and the joy of living life to the fullest—all under the warm embrace of the sun.</Text>
                 </Box>
 
                 {/* Team and Members */}
@@ -33,7 +33,7 @@ const About = () => {
                                     <Box id={index} w={"25%"} >
                                         <Card >
                                             <CardBody p={"1"}>
-                                                <Image borderRadius={"5px"} w={"100%"} height={"250px"} src={data.image}></Image>
+                                                <Image objectFit={"cover"} borderRadius={"5px"} w={"100%"} height={"260px"} src={data.image}></Image>
                                                 <Stack mt='1' spacing='2'>
                                                     <Flex alignItems={"center"} justifyContent={"space-between"}>
                                                         <Heading p={"0 0.2rem"} size="35px">{data.postin}</Heading>

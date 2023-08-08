@@ -6,7 +6,7 @@ const Layout = (props) => {
     return (
         <div>
             <Navbaar />
-            <div style={{ padding: "0 5%" }} >
+            <div  >
                 {
                     props.children
                 }
