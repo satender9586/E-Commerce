@@ -7,12 +7,12 @@ const Navbaar = () => {
 
 
     return (
-        <Box padding={"0 5%"} boxShadow={"0 7px 3px -7px black"} position={"sticky"} top="0" height={"55px"} zIndex={"1"} bg={"rgb(244, 137, 0)"}>
+        <Box padding={"0 5%"} position={"sticky"} top="0" height={"55px"} transition="box-shadow 0.3s ease" boxShadow="0 2px 4px rgba(0, 0, 0, 0.1)" zIndex={"1"} bgGradient="linear(to right, #2CB7A4, #D4AF37)" >
             <Grid w={"100%"} height={"55px"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} templateColumns='repeat(2, 1fr)'>
                 <GridItem colSpan={6}>
                     <Box>
                         <NavLink to="/">
-                            <Text fontSize={"30px"} color={"white"} fontFamily={"roboto"} fontWeight={"700"}>SunShine</Text>
+                            <Text fontSize={"30px"} color={"white"} fontFamily={"roboto"} fontWeight={"700"}>The Test Of Fast-Food</Text>
                         </NavLink>
                     </Box>
                 </GridItem>

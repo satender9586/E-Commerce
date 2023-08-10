@@ -12,10 +12,10 @@ const Contact = () => {
                 <Grid templateColumns={"repeat(2,1fr)"} height={"100%"}>
                     <GridItem>
                         <Box pt={"0.5rem"}>
-                            <Text textAlign={"center"} color={"red.600"} fontSize={"30px"} fontWeight={"700"}>Welcome to the Sunsine Store</Text>
-                            <Text textAlign={"center"} color={"yellow.200"} fontWeight={"500"} fontSize={"20px"}>We are avilable 24*7 for you</Text>
+                            <Text textAlign={"center"} color={"red.600"} fontSize={"30px"} fontWeight={"700"}>Welcome to the "<spna style={{ color: "Green" }}>The Test of Fast-Food</spna>"</Text>
+                            <Text textAlign={"center"} color={"blue"} fontWeight={"500"} fontSize={"25px"}>We are avilable 24*7 for you</Text>
                         </Box>
-                        <Box p={"0 20%"} pt={"1.5rem"}>
+                        <Box p={"0 10%"} pt={"1.5rem"}>
                             <form>
                                 <FormControl>
                                     <FormLabel>Full Name</FormLabel>

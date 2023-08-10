@@ -63,10 +63,32 @@ const Signup = () => {
             <>
                 <Box height={"91vh"}>
                     <Box position={"relative"} height={"91vh"}>
-                        <Image objectFit={"cover"} height={"91vh"} w={"100%"} src={shop} ></Image>
-                        <Box position={"absolute"} top={"30%"} left={"5%"}>
-                            <Text fontSize={"60px"} fontWeight={"700"} color={"white"}>The <span style={{ color: "red" }}>SunShine </span> Store</Text>
-                            <Text fontSize={"20px"} fontWeight={"500"} color={"blue"}><span>Timeless</span> Treasures, Forever Yours - Discover Elegance in <br></br>Every Moment.</Text>
+                        <Box w="100%" h="91vh" position="relative">
+                            <Box
+                                position="absolute"
+                                top="0"
+                                left="0"
+                                w="100%"
+                                h="100%"
+                                bgGradient="linear(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7))"
+                            />
+                            <Image
+                                objectFit="cover"
+                                height="100%"
+                                width="100%"
+                                src={shop}
+                                alt="Shop"
+                            />
+                        </Box>
+
+                        <Box position="absolute" top="30%" left="5%">
+                            <Text fontSize="50px" fontWeight="700" color="white">
+                                The <span style={{ color: "#FF0000" }}>Test of Fast-Food</span> Store
+                            </Text>
+                            <Text fontSize="20px" fontWeight="500" color="#007BFF">
+                                <span>Timeless</span> Treasures, Fast Delivery, Forever Yours -{' '}
+                                <span style={{ color: "white" }}>Elegance in Every Moment.</span>
+                            </Text>
                         </Box>
                     </Box>
 
