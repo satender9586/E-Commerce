@@ -1,6 +1,13 @@
 import { comparePassword, hashPassword } from "../helper/authhelper.js";
 import userModels from "../models/userModels.js"
 import JWT from "jsonwebtoken";
+import otpgenerator from "otp-generator"
+import otpgeneratModel from "../models/otpgeneratModel.js";
+import { transporter } from "../utils/function.js";
+
+
+
+
 
 const registercontroller = async (req, res) => {
 
@@ -19,27 +26,77 @@ const registercontroller = async (req, res) => {
             })
         }
 
-        // Registration User
 
-        const hashedPasswrod = await hashPassword(password)
-        // save user Data
+        // Generate OTP
+        const data = function generateotp() {
+            let otp = ''
+            const digit = "1234567890"
 
-        const user = await new userModels({ name, email, phone, address, password: hashedPasswrod }).save()
+            for (let i = 0; i <= 5; i++) {
+                const rendomdigit = Math.floor(Math.random() * digit.length)
+                otp += rendomdigit;
+            }
+            return otp;
+        }
+
+        let otp = data()
+
+        try {
+
+
+            // Send OTP via email
+            const mailOptions = {
+                from: 'sksatenderkumar59@gmail.com',
+                to: email,
+                subject: 'OTP for Registration',
+                text: `Your OTP for registration is: ${otp}`,
+            };
+            try {
+                const info = await transporter.sendMail(mailOptions);
+                console.log('Email sent:', info.response);
+                // // Save OTP to OTP collection
+                const newOtp = await new otpgeneratModel({ email, otp }).save();
+
+            } catch (error) {
+                console.error('Error sending email:', error);
+            }
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({
+                success: false,
+                message: "Error in Registration",
+            });
+        }
+
+        // Hash password
+        const hashedPassword = await hashPassword(password);
+
+
+        // Save user data
+        const user = await new userModels({
+            name,
+            email,
+            phone,
+            address,
+            password: hashedPassword,
+        }).save();
+
         res.status(201).send({
             success: true,
-            message: "User Register SuccesFully",
-            user
-        })
-
-
+            message: "User Registered Successfully. Please verify your email.",
+            user,
+        });
     } catch (error) {
-        console.log(error)
+        console.log(error);
         res.status(500).send({
             success: false,
-            message: "Error in Registeration"
-        })
+            message: "Error in Registration",
+        });
     }
-}
+};
+
+
 
 
 
