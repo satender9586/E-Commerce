@@ -4,9 +4,10 @@ import JWT from "jsonwebtoken";
 import otpgenerator from "otp-generator"
 import otpgeneratModel from "../models/otpgeneratModel.js";
 import { transporter } from "../utils/function.js";
+import { generatresendotp } from "../utils/function.js";
 
 
-
+// New User Register First Time Api
 
 
 const registercontroller = async (req, res) => {
@@ -38,13 +39,9 @@ const registercontroller = async (req, res) => {
             }
             return otp;
         }
-
+        // Send OTP via email
         let otp = data()
-
         try {
-
-
-            // Send OTP via email
             const mailOptions = {
                 from: 'sksatenderkumar59@gmail.com',
                 to: email,
@@ -71,8 +68,6 @@ const registercontroller = async (req, res) => {
 
         // Hash password
         const hashedPassword = await hashPassword(password);
-
-
         // Save user data
         const user = await new userModels({
             name,
@@ -80,6 +75,9 @@ const registercontroller = async (req, res) => {
             phone,
             address,
             password: hashedPassword,
+            otp,
+            isverify: false,
+            otptime: Date.now()
         }).save();
 
         res.status(201).send({
@@ -97,8 +95,113 @@ const registercontroller = async (req, res) => {
 };
 
 
+// OTP Vrify After That user will create successfully
+
+const otpverify = async (req, res) => {
+    const { email, otp } = req.body;
+    try {
+        const user = await userModels.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ message: "Invalid OTP" });
+        }
+
+        const currentTime = Date.now();
+        const signupTime = currentTime - user.otptime;
+        if (signupTime >= 30000) {
+            return res.status(401).json({ message: "otp expired" });
+        }
+        if (user.otp == otp) {
+            user.isverify = true;
+            user.otp = undefined;
+            await user.save();
+        } else {
+            return res.status(401).json({ message: "You Enter Invalid otp" });
+        }
 
 
+
+        res.status(200).json({ message: "OTP verified successfully" });
+    } catch (error) {
+        console.log("Error From verify api", error);
+        res.status(500).json({ message: "Something is wrong", error });
+    }
+};
+
+
+// Resetn Otp In case last opt expire
+
+const resendotp = async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        const user = await userModels.findOne({ email });
+
+        if (!user) {
+            return res.status(401).json({ success: false, message: "Invalid Email id" });
+        }
+
+        if (user.isverify) {
+            return res.status(400).json({ success: false, message: "Email is Already Verified" });
+        }
+
+        // Find any existing OTP document for the email
+        const existingOTP = await otpgeneratModel.findOne({ email });
+
+        let otp;
+        if (existingOTP) {
+            // If an existing OTP document exists, update its OTP value
+            otp = generatresendotp();
+            existingOTP.otp = otp;
+            await existingOTP.save();
+            user.otp = otp;
+            user.otptime = Date.now()
+            await user.save()
+        } else {
+            // If no existing OTP document, create a new one
+            otp = generatresendotp();
+            const newOtp = new otpgeneratModel({ email, otp });
+            await newOtp.save();
+
+
+        }
+
+        const mailOptions = {
+            from: 'sksatenderkumar59@gmail.com',
+            to: email,
+            subject: 'Re-Send OTP for Registration',
+            text: `Your Resend OTP for registration is: ${otp}`,
+        };
+
+        try {
+            // Use your defined transporter here
+            const info = await transporter.sendMail(mailOptions);
+
+            console.log('Email sent:', info.response);
+
+            return res.status(200).json({
+                success: true,
+                message: "OTP sent successfully",
+            });
+
+        } catch (error) {
+            console.error('Error sending email:', error);
+            return res.status(500).json({
+                success: false,
+                message: "Error sending OTP email",
+            });
+        }
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: "Error in server",
+        });
+    }
+};
+
+
+// Login User Api
 
 const loginController = async (req, res) => {
     try {
@@ -153,4 +256,4 @@ const loginController = async (req, res) => {
 };
 
 
-export { registercontroller, loginController }
+export { registercontroller, loginController, otpverify, resendotp }

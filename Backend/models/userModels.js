@@ -26,6 +26,18 @@ const userSchema = new mongoose.Schema({
     role: {
         type: Number,
         default: 0
+    },
+    otp: {
+        type: Number,
+        require: true
+    },
+    isverify: {
+        type: Boolean,
+        required: true,
+    },
+    otptime: {
+        type: String,
+        required: true
     }
 }, { timestamps: true });
 

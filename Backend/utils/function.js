@@ -12,3 +12,14 @@ export const transporter = nodemailer.createTransport({
         pass: 'nlfggpdqwoojbdoe',
     },
 });
+
+export function generatresendotp() {
+    let otp = ''
+    const digit = "1234567890"
+
+    for (let i = 0; i <= 5; i++) {
+        const rendomdigit = Math.floor(Math.random() * digit.length)
+        otp += rendomdigit;
+    }
+    return otp;
+}
