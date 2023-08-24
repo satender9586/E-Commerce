@@ -108,7 +108,7 @@ const otpverify = async (req, res) => {
 
         const currentTime = Date.now();
         const signupTime = currentTime - user.otptime;
-        if (signupTime >= 30000) {
+        if (signupTime >= 90000) {
             return res.status(401).json({ message: "otp expired" });
         }
         if (user.otp == otp) {

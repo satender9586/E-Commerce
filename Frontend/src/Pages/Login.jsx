@@ -6,9 +6,11 @@ import { FormControl, FormLabel, FormErrorMessage, FormHelperText, useDisclosure
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Image } from '@chakra-ui/react'
 import { BiSolidHide, BiShow } from "react-icons/bi"
 import { SinginputValidation } from '../Validation/validationFuncltion'
-
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+
+    const Navigate = useNavigate()
     const [formData, setFormData] = useState({ name: "", email: "", password: "" })
     const [showPassword, setShowPassword] = useState(false)
     const [formError, setFormError] = useState({})
@@ -86,11 +88,11 @@ const Login = () => {
                         </Text>
                     </Box>
                 </Box>
-                <Modal isOpen={isOpen} size={'md'} onClose={onClose}>
+                <Modal isOpen={isOpen} size={'md'} >
                     <ModalOverlay />
                     <ModalContent>
                         <ModalHeader>SignUp</ModalHeader>
-                        <ModalCloseButton />
+                        <ModalCloseButton onClick={() => Navigate("/")} />
                         <ModalBody p={"0 5%"}>
                             <form >
                                 <FormControl>

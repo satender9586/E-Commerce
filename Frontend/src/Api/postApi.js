@@ -23,4 +23,12 @@ export const OtpverifyApi = async (data) => {
         throw new Error("Some Thing gone otpverify api")
     }
     return response;
-} 
+}
+
+export const ResendotpApi = async (data) => {
+    const response = await axios.post(`${ApiPath}/${data.path}`, data.datas)
+    if (!response) {
+        throw new Error("Some Thing gone otpverify api")
+    }
+    return response;
+}

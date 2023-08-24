@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Layout from '../Components/Layout/Layout'
 import shop from "../assets/shop.jpg"
 import { Box, Text, Input, InputGroup, InputRightAddon, } from '@chakra-ui/react'
@@ -7,25 +7,88 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody,
 import { BiSolidHide, BiShow } from "react-icons/bi"
 import { SinginputValidation } from '../Validation/validationFuncltion'
 import { useNavigate } from "react-router-dom"
-import { OtpverifyApi } from '../Api/postApi'
+import { OtpverifyApi, ResendotpApi } from '../Api/postApi'
+
+import { useSelector } from "react-redux"
 
 
 const Otp = () => {
 
-    const [email, setEmail] = useState("")
-    const [otp, setOtp] = useState("")
+    const datas = useSelector((state) => state)
+    const Navigate = useNavigate()
+    const [email, setEmail] = useState(datas?.user[0]?.email)
+    const [otp, setOtp] = useState()
+    const [otpTime, setOtpTime] = useState(90);
+    const intervalIdRef = useRef(null);
+
+
+
 
     // OTP Verify Api
     const OtpHandler = async () => {
+        const newobj = {
+            email: datas?.user[0]?.email,
+            otp: otp
+        }
+        try {
+            const response = await OtpverifyApi({ path: "/Otp-verify", datas: newobj })
+            if (response.statusText == "OK") {
+                Navigate("/login")
+            }
 
+        } catch (error) {
+            console.log("This Error from OTP-Verify Api", error)
+        }
     }
 
-    const Navigate = useNavigate()
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    // Otp Expire Time & And Calling Resend OTP For Verify
+
+
+    function timeclaution() {
+        useEffect(() => {
+            if (otpTime > 0) {
+                intervalIdRef.current = setInterval(() => {
+                    setOtpTime(prevTime => prevTime - 1);
+                }, 1000);
+            } else {
+                clearInterval(intervalIdRef.current);
+            }
+
+            return () => {
+                clearInterval(intervalIdRef.current);
+            };
+        }, [otpTime]);
+
+    }
+    timeclaution()
+
+
+    // Resend Otp function 
+
+    async function ResendOtp() {
+
+        const newobj = {
+            email: datas?.user[0]?.email,
+        }
+        try {
+            const reponse = await ResendotpApi({ path: "/resend-otp", datas: newobj })
+            if (reponse.statusText == "OK") {
+                setOtpTime(90)
+                timeclaution()
+                Navigate("/login")
+
+            }
+        } catch (error) {
+            console.log("Error From Resend Otp api", error)
+        }
+    }
 
     useEffect(() => {
         onOpen()
+
     }, [])
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
 
     return (
         <>
@@ -60,7 +123,7 @@ const Otp = () => {
                             </Text>
                         </Box>
                     </Box>
-                    <Modal isOpen={isOpen} size={'md'} >
+                    <Modal isOpen={isOpen} size={'sm'} >
                         <ModalOverlay />
                         <ModalContent>
                             <ModalHeader>OTP Verify</ModalHeader>
@@ -70,26 +133,28 @@ const Otp = () => {
 
                                     <FormControl>
                                         <FormLabel>Email Id</FormLabel>
-                                        <Input disabled value={email} name="email" type='email' />
+                                        <Input disabled value={email} fontSize={"18px"} name="email" type='email' />
                                         {/* <Text color={"Red"} fontSize={"12px"}>{formError.email}</Text> */}
                                     </FormControl>
                                     <FormControl>
                                         <FormLabel>Enter OTP</FormLabel>
-                                        <Input name="name" type='text' onChange={(e) => setOtp(e.target.value)} />
+                                        <Input name="name" type='text' fontSize={"18px"} onChange={(e) => setOtp(e.target.value)} />
                                         {/* <Text color={"Red"} fontSize={"12px"}>{formError.name}</Text> */}
                                     </FormControl>
 
-
-
                                 </form>
+                                <Box mt={"10px"}>
+                                    <Text textTransform={"capitalize"} fontSize={"12px"} color={"red"}>OTP Will Expire with in : <span style={{ color: "black" }}>{otpTime}</span> Sec</Text>
+                                </Box>
                             </ModalBody>
 
                             <ModalFooter>
-                                <Button colorScheme='red' mr={3} >
-                                    Clear
+
+                                <Button display={otpTime == 0 ? "flex" : "none"} onClick={ResendOtp} colorScheme='red' mr={3} >
+                                    Resend-OTP
                                 </Button>
-                                <Button colorScheme='blue' mr={3} >
-                                    LogIn
+                                <Button colorScheme='blue' onClick={OtpHandler} mr={3} >
+                                    Verify
                                 </Button>
 
                             </ModalFooter>

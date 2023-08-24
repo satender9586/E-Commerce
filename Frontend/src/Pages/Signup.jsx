@@ -8,9 +8,15 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody,
 import shop from "../assets/shop.jpg"
 import { SignupApi } from './../Api/postApi';
 import { useNavigate } from "react-router-dom"
-
+import { useSelector } from "react-redux"
+import { useDispatch } from 'react-redux'
+import { addItem } from '../Components/redux/slice/UserSlice'
 
 const Signup = () => {
+
+    const datas = useSelector((state) => state)
+    const Dispatch = useDispatch()
+    console.log(datas)
 
     const Navigate = useNavigate()
     const [formData, setFormData] = useState({ name: "", phone: "", email: "", password: "", repassword: "", address: "" })
@@ -55,10 +61,13 @@ const Signup = () => {
             const response = await SignupApi({ path: "/register", datas: formData })
 
             if (response.request.status == 200) {
+
                 Navigate("/login")
 
             } else if (response.request.status == 201) {
+                Dispatch(addItem(formData))
                 Navigate("/otp")
+
             }
 
         } catch (error) {
@@ -107,11 +116,11 @@ const Signup = () => {
                         </Box>
                     </Box>
 
-                    <Modal isOpen={isOpen} size={'xl'} onClose={onClose}>
+                    <Modal isOpen={isOpen} size={'xl'} >
                         <ModalOverlay />
                         <ModalContent>
                             <ModalHeader>Register User</ModalHeader>
-                            <ModalCloseButton />
+                            <ModalCloseButton onClick={() => Navigate("/")} />
                             <ModalBody p={"0 5%"}>
                                 <form >
                                     <FormControl>
