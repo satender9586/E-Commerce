@@ -15,7 +15,7 @@ const registercontroller = async (req, res) => {
     try {
         const { name, email, password, phone, address } = req.body;
         // validation
-        if (!name || !email || !password || !phone || !address) {
+        if (!name || !email || !password || !phone) {
             return res.send({ error: "All Feild Are Mendatory" })
         }
         // check user0

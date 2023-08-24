@@ -2,8 +2,7 @@ import React from 'react'
 import Layout from '../Components/Layout/Layout'
 import { Box, Image, Text } from '@chakra-ui/react'
 import shop from "../assets/shop.jpg"
-
-
+import HomeProducts from '../Components/Products/HomeProducts'
 
 const HomePage = () => {
     return (
@@ -36,7 +35,7 @@ const HomePage = () => {
                     </Text>
                 </Box>
             </Box>
-
+            <HomeProducts />
         </Layout>
     )
 }

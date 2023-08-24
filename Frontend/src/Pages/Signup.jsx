@@ -6,12 +6,13 @@ import { SinginputValidation } from '../Validation/validationFuncltion'
 import { FormControl, FormLabel, FormErrorMessage, FormHelperText, } from '@chakra-ui/react'
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Image } from '@chakra-ui/react'
 import shop from "../assets/shop.jpg"
-
-
+import { SignupApi } from './../Api/postApi';
+import { useNavigate } from "react-router-dom"
 
 
 const Signup = () => {
 
+    const Navigate = useNavigate()
     const [formData, setFormData] = useState({ name: "", phone: "", email: "", password: "", repassword: "", address: "" })
     const [showPassword, setShowPassword] = useState(false)
     const [repassword, setrepassword] = useState(false)
@@ -43,12 +44,26 @@ const Signup = () => {
 
     }
     // form Data collected
-    const submitFormHandler = (e) => {
+    const submitFormHandler = async (e) => {
         e.preventDefault()
         setFormSubmit(true)
 
         const finalvalidation = SinginputValidation(formData)
         setFormError(finalvalidation)
+
+        try {
+            const response = await SignupApi({ path: "/register", datas: formData })
+
+            if (response.request.status == 200) {
+                Navigate("/login")
+
+            } else if (response.request.status == 201) {
+                Navigate("/otp")
+            }
+
+        } catch (error) {
+
+        }
 
     }
 
