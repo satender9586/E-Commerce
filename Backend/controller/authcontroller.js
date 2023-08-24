@@ -101,6 +101,7 @@ const otpverify = async (req, res) => {
     const { email, otp } = req.body;
     try {
         const user = await userModels.findOne({ email });
+
         if (!user) {
             return res.status(401).json({ message: "Invalid OTP" });
         }
@@ -149,7 +150,7 @@ const resendotp = async (req, res) => {
 
         let otp;
         if (existingOTP) {
-            // If an existing OTP document exists, update its OTP value
+
             otp = generatresendotp();
             existingOTP.otp = otp;
             await existingOTP.save();
@@ -157,7 +158,7 @@ const resendotp = async (req, res) => {
             user.otptime = Date.now()
             await user.save()
         } else {
-            // If no existing OTP document, create a new one
+
             otp = generatresendotp();
             const newOtp = new otpgeneratModel({ email, otp });
             await newOtp.save();
@@ -181,6 +182,7 @@ const resendotp = async (req, res) => {
             return res.status(200).json({
                 success: true,
                 message: "OTP sent successfully",
+                otp,
             });
 
         } catch (error) {
