@@ -25,7 +25,6 @@ function App() {
         <Route path='/about' element={<About />}></Route>
         <Route path='/policy' element={<Policy />}></Route>
         <Route path='/*' element={<Notfound />}></Route>
-
       </Routes>
     </>
   )

@@ -7,6 +7,7 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody,
 import { BiSolidHide, BiShow } from "react-icons/bi"
 import { SinginputValidation } from '../Validation/validationFuncltion'
 import { useNavigate } from 'react-router-dom'
+import { LoginApi } from '../Api/postApi'
 
 const Login = () => {
 
@@ -39,12 +40,29 @@ const Login = () => {
 
     }
     // form Data collected
-    const submitFormHandler = (e) => {
+    const submitFormHandler = async (e) => {
         e.preventDefault()
         setFormSubmit(true)
 
         const finalvalidation = SinginputValidation(formData)
         setFormError(finalvalidation)
+        const newform = {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+        }
+
+        try {
+            const response = await LoginApi({ path: "/login", datas: newform })
+
+            const token = response.data.token
+            localStorage.setItem("auth", token)
+            Navigate("/")
+
+        } catch (error) {
+            console.log("This error is comming from Login api : ", error)
+
+        }
 
     }
 
