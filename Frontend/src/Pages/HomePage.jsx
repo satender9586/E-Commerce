@@ -3,8 +3,12 @@ import Layout from '../Components/Layout/Layout'
 import { Box, Image, Text } from '@chakra-ui/react'
 import shop from "../assets/shop.jpg"
 import HomeProducts from '../Components/Products/HomeProducts'
+import { useSelector } from "react-redux"
 
 const HomePage = () => {
+    const datas = useSelector((state) => state)
+    console.log(datas)
+
     return (
         <Layout>
             <Box position={"relative"} height={"91vh"}>
