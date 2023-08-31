@@ -13,6 +13,7 @@ import { Routes, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { fetchAllProuct } from './Components/redux/slice/ProductSlice'
 import { useSelector } from 'react-redux'
+import AboutProduct from './Components/Products/AboutProduct'
 
 
 function App() {
@@ -23,7 +24,6 @@ function App() {
 
 
   useEffect(() => {
-    // Dispatch the fetchAllProduct async thunk when the component mounts
     dispatch(fetchAllProuct());
   }, [dispatch]);
 
@@ -44,6 +44,7 @@ function App() {
         <Route path='/otp' element={<Otp />}></Route>
         <Route path='/contact' element={<Contact />}></Route>
         <Route path='/about' element={<About />}></Route>
+        <Route path='/aboutProduct/:id' element={<AboutProduct />}></Route>
         <Route path='/policy' element={<Policy />}></Route>
         <Route path='/*' element={<Notfound />}></Route>
       </Routes>

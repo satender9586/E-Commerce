@@ -6,8 +6,11 @@ import HomeProducts from '../Components/Products/HomeProducts'
 import { useSelector } from "react-redux"
 
 const HomePage = () => {
-    const datas = useSelector((state) => state)
-    console.log(datas)
+    const { data, status, error } = useSelector((state) => state.product);
+    const product = data?.data?.products
+   
+
+   
 
     return (
         <Layout>
@@ -39,7 +42,7 @@ const HomePage = () => {
                     </Text>
                 </Box>
             </Box>
-            <HomeProducts />
+            <HomeProducts product={product} />
         </Layout>
     )
 }

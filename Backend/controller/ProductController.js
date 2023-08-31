@@ -1,5 +1,6 @@
 import productModel from "../models/productModel.js"; // Make sure the path to your model is correct
 
+
 const addProduct = async (req, res) => {
     try {
         const { name, price, image, descrip } = req.body;
@@ -28,4 +29,19 @@ const getAllProduct = async (req, res) => {
     }
 };
 
-export { addProduct, getAllProduct };
+const getSingleProduct = async (req, res) => {
+    try {
+        const id = req.params.id; // Use req.params.id instead of req.param.id
+        const product = await productModel.findById(id).lean(); // Use await here to wait for the query to complete
+        if (!product) {
+            return res.status(404).json({ error: "Product not available" }); // Use 404 status for resource not found
+        }
+
+        res.json(product);
+    } catch (error) {
+        console.log("Error from single product id", error);
+        res.status(500).json({ error: "Internal server error" }); // Use 500 status for internal server error
+    }
+};
+
+export { addProduct, getAllProduct, getSingleProduct };
