@@ -68,15 +68,14 @@ const Navbaar = () => {
                                 </Box>
                             )
                         }
-                        {
-                            token && (
-                                <Box>
-                                    <NavLink to="/contact" className="nav-Link">
-                                        Cart
-                                    </NavLink>
-                                </Box>
-                            )
-                        }
+
+                        <Box>
+                            <NavLink to="/cart" className="nav-Link">
+                                Cart
+                            </NavLink>
+                        </Box>
+
+
 
                         {
                             token ?
