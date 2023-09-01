@@ -8,9 +8,10 @@ import { useSelector } from "react-redux"
 const HomePage = () => {
     const { data, status, error } = useSelector((state) => state.product);
     const product = data?.data?.products
-   
 
-   
+
+
+
 
     return (
         <Layout>
@@ -41,7 +42,25 @@ const HomePage = () => {
                         <span style={{ color: "white" }}>Elegance in Every Moment.</span>
                     </Text>
                 </Box>
+
             </Box>
+            <Box mt={"3%"}>
+                <Text
+                    textAlign="center"
+                    fontSize="50px"
+                    color="red"
+                    fontWeight="600"
+                    transition="color 0.3s ease, transform 0.3s ease"
+
+                    _hover={{
+                        color: "blue",
+                        transform: "translateY(-5px)"
+                    }}
+                >
+                    Our Products
+                </Text>
+            </Box>
+
             <HomeProducts product={product} />
         </Layout>
     )

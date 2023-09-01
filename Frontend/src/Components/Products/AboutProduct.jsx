@@ -8,30 +8,34 @@ import { Image, Text } from '@chakra-ui/react'
 import { FaRupeeSign } from "react-icons/fa"
 import HomeProducts from './HomeProducts'
 import { SingleProdtGet } from '../../Api/getApi'
+import { useDispatch } from 'react-redux'
+import { addtoCart } from '../redux/slice/CartSlice'
 
 const AboutProduct = () => {
-
+    const path = useParams()
+    const Dispatch = useDispatch()
     const [singleproduct, setSingleProduct] = useState("")
     const { data, status, error } = useSelector((state) => state.product);
     const product = data?.data?.products
+    const datas = useSelector((state) => state.cart)
+    console.log("cart", datas)
+    const [valuecart, setValuecart] = useState()
 
 
-    const path = useParams()
+    function AddtoCartFucntion() {
 
-    console.log(singleproduct)
+        Dispatch(addtoCart(singleproduct))
+    }
+
+
+
     // Single product get api function
 
     const GetSingleProduct = async () => {
         try {
             const reponse = await SingleProdtGet({ id: path.id })
-
             setSingleProduct(reponse?.data)
-
-
-
-
         } catch (error) {
-
         }
     }
     useEffect(() => {
@@ -48,12 +52,12 @@ const AboutProduct = () => {
                     </GridItem>
                     <GridItem>
                         <Box>
-                            <Text fontSize={"30px"}>Iconic (Accessories)</Text>
+
                             <Text fontSize={"40px"}>{singleproduct.name}</Text>
                             <Text fontSize={"30px"}>{singleproduct.price} </Text>
                         </Box>
                         <Box mt={"10px"}>
-                            <Select w={"25%"} fontSize={"18px"} placeholder='Quantity'>
+                            <Select w={"25%"} fontSize={"18px"} onChange={(e) => { setValuecart(e.target.value) }} placeholder='Quantity'>
                                 <option value='1'> 1</option>
                                 <option value='2'>2</option>
                                 <option value='3'>3</option>
@@ -63,12 +67,12 @@ const AboutProduct = () => {
                             </Select>
                         </Box>
                         <Box mt={"10px "}>
-                            <Button colorScheme='blue'>Add To Cart</Button>
+                            <Button onClick={AddtoCartFucntion} colorScheme='blue'>Add To Cart</Button>
                         </Box>
 
                         <Box mt={"10px"}>
                             <Text fontWeight={"500"} fontSize={"25px"}>Description</Text>
-                            <Text mt={"10px"}>68.58cm/27-inch (diagonal) 5120-by-2880 Retina 5K display 3.1GHz 6-core 10th-generation Intel Core i5 AMD Radeon Pro 5300 graphics Ultrafast SSD storage Two Thunderbolt 3 (USB-C) ports Four USB-A ports Gigabit Ethernet port</Text>
+                            <Text mt={"10px"}>{singleproduct.about}</Text>
                         </Box>
                     </GridItem>
                 </Grid>

@@ -8,6 +8,8 @@ import About from './Pages/About'
 import Contact from './Pages/Contact'
 import Notfound from './Pages/Notfound'
 import Otp from './Pages/Otp'
+import Allproducts from './Pages/Allproducts'
+
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -43,6 +45,7 @@ function App() {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/otp' element={<Otp />}></Route>
         <Route path='/contact' element={<Contact />}></Route>
+        <Route path='/category' element={<Allproducts />}></Route>
         <Route path='/about' element={<About />}></Route>
         <Route path='/aboutProduct/:id' element={<AboutProduct />}></Route>
         <Route path='/policy' element={<Policy />}></Route>

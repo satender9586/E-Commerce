@@ -1,4 +1,6 @@
-const path = "http://localhost:8080/api/v1/product//singleproduct"
+const path = "http://localhost:8080/api/v1/product/singleproduct"
+
+
 import axios from "axios"
 
 
@@ -15,3 +17,4 @@ export const SingleProdtGet = async (data) => {
     }
     return reponse;
 }
+

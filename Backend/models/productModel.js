@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+
+
 const productModel = new mongoose.Schema({
     name: {
         type: String,
@@ -17,6 +19,13 @@ const productModel = new mongoose.Schema({
     descrip: {
         type: String,
         required: true
+    },
+    catogary: {
+        type: String,
+        required: true
+    },
+    about: {
+        type: String
     }
 
 }, { timestamps: true })

@@ -9,29 +9,14 @@ import { useNavigate } from 'react-router-dom';
 const HomeProducts = ({ product }) => {
 
     const Navigate = useNavigate()
-
     function AboutProductfun(id) {
         Navigate(`/aboutProduct/${id}`)
     }
 
+
     return (
         <Box p={"5% 5%"}>
-            <Box mt={"-2%"} mb={"20px"}>
-                <Text
-                    textAlign="center"
-                    fontSize="50px"
-                    color="red"
-                    fontWeight="600"
-                    transition="color 0.3s ease, transform 0.3s ease"
 
-                    _hover={{
-                        color: "blue",
-                        transform: "translateY(-5px)"
-                    }}
-                >
-                    Our Products
-                </Text>
-            </Box>
             <Flex flexWrap={"wrap"} justifyContent={"center"} alignItems={"center"} w={"100%"} >
                 {
                     product?.map((data, index) => (
@@ -50,9 +35,7 @@ const HomeProducts = ({ product }) => {
                                             {data.descrip}
                                         </Text>
                                         <Text> <Box display={"flex"} alignItems={"center"}> <Box fontSize={"15px"} color={"green"}><FaRupeeSign /></Box> <Box fontSize={"18px"} fontWeight={"500"} color={"green"}>{data.price}</Box></Box></Text>
-                                        {/* <Box mt={"10px"}>
-                                            <Button variant={"none"} fontWeight={"600"} textTransform={"capitalize"} color={"white"} bg={"black"}>Add To Card</Button>
-                                        </Box> */}
+
                                     </Stack>
                                 </CardBody>
                             </Card>

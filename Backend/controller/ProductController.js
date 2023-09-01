@@ -3,14 +3,14 @@ import productModel from "../models/productModel.js"; // Make sure the path to y
 
 const addProduct = async (req, res) => {
     try {
-        const { name, price, image, descrip } = req.body;
+        const { name, price, image, descrip, about, catogary } = req.body;
 
-        if (!name || !price || !image || !descrip) {
+        if (!name || !price || !image || !descrip || !catogary) {
 
             return res.status(400).json({ error: "All Fields Are Mandatory" });
         }
 
-        const newProduct = new productModel({ name, price, image, descrip });
+        const newProduct = new productModel({ name, price, image, descrip, catogary, about });
         await newProduct.save();
 
         return res.status(201).json({ message: "Product added Successfully", product: newProduct });
@@ -31,17 +31,32 @@ const getAllProduct = async (req, res) => {
 
 const getSingleProduct = async (req, res) => {
     try {
-        const id = req.params.id; // Use req.params.id instead of req.param.id
-        const product = await productModel.findById(id).lean(); // Use await here to wait for the query to complete
+        const id = req.params.id;
+        const product = await productModel.findById(id).lean();
         if (!product) {
-            return res.status(404).json({ error: "Product not available" }); // Use 404 status for resource not found
+            return res.status(404).json({ error: "Product not available" });
         }
 
         res.json(product);
     } catch (error) {
         console.log("Error from single product id", error);
-        res.status(500).json({ error: "Internal server error" }); // Use 500 status for internal server error
+        res.status(500).json({ error: "Internal server error" });
     }
 };
 
-export { addProduct, getAllProduct, getSingleProduct };
+
+const getProductCategory = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const product = await productModel.find({ catogary: id })
+        if (!product) {
+            res.status(500).json({ message: "Product are Not Available" })
+        }
+        return res.json(product)
+    } catch (error) {
+        console.log("Error form category api", error)
+        res.status(500).json({ message: "Something Is Wrong" })
+    }
+}
+
+export { addProduct, getAllProduct, getSingleProduct, getProductCategory };
