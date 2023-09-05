@@ -1,5 +1,5 @@
 import express from "express";
-import { addProduct, getAllProduct, getSingleProduct, getProductCategory } from "../controller/ProductController.js"
+import { addProduct, getAllProduct, getSingleProduct } from "../controller/ProductController.js"
 
 
 const router = express.Router();
@@ -16,8 +16,6 @@ router.get("/products", getAllProduct)
 
 router.get("/singleproduct/:id", getSingleProduct)
 
-// Get  CategoryProduct Base on Category || GET METHOD
 
-router.get("/categoryproduct/:id", getProductCategory)
 
-export default router;
+export default router;              

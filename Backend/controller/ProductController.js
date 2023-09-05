@@ -45,18 +45,6 @@ const getSingleProduct = async (req, res) => {
 };
 
 
-const getProductCategory = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const product = await productModel.find({ catogary: id })
-        if (!product) {
-            res.status(500).json({ message: "Product are Not Available" })
-        }
-        return res.json(product)
-    } catch (error) {
-        console.log("Error form category api", error)
-        res.status(500).json({ message: "Something Is Wrong" })
-    }
-}
 
-export { addProduct, getAllProduct, getSingleProduct, getProductCategory };
+
+export { addProduct, getAllProduct, getSingleProduct };

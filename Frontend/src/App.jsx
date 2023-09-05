@@ -17,9 +17,11 @@ import { useDispatch } from 'react-redux'
 import { fetchAllProuct } from './Components/redux/slice/ProductSlice'
 import { useSelector } from 'react-redux'
 import AboutProduct from './Components/Products/AboutProduct'
+import PlaceOrder from './Pages/PlaceOrder'
 
 
 function App() {
+
   const dispatch = useDispatch()
   const productData = useSelector((state) => state.product.data);
   const status = useSelector((state) => state.product.status);
@@ -48,6 +50,7 @@ function App() {
         <Route path='/contact' element={<Contact />}></Route>
         <Route path='/category' element={<Allproducts />}></Route>
         <Route path='/cart' element={<Cart />}></Route>
+        <Route path='/shipping' element={<PlaceOrder />}></Route>
         <Route path='/about' element={<About />}></Route>
         <Route path='/aboutProduct/:id' element={<AboutProduct />}></Route>
         <Route path='/policy' element={<Policy />}></Route>

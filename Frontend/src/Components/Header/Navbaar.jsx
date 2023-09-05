@@ -12,11 +12,13 @@ import {
     MenuOptionGroup,
     MenuDivider,
 } from '@chakra-ui/react'
+import { useSelector } from 'react-redux'
 
 
 const Navbaar = () => {
     const token = localStorage.getItem("auth")
     const [count, setcout] = useState(false)
+    const cartDatas = useSelector((state) => state.cart)
 
     const logoutfun = () => {
         localStorage.removeItem("auth");
@@ -69,10 +71,13 @@ const Navbaar = () => {
                             )
                         }
 
-                        <Box>
+                        < Box position={"relative"}>
                             <NavLink to="/cart" className="nav-Link">
                                 Cart
                             </NavLink>
+                            {
+                                cartDatas.items.length > 0 && <Box zIndex={"100"} bg={"green"} w={"20px"} textAlign={"center"} borderRadius={"full"} position={"absolute"} left={"80%"} top={"-40%"}>{cartDatas.items.length}</Box>
+                            }
                         </Box>
 
 

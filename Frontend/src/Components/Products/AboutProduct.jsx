@@ -22,15 +22,13 @@ const AboutProduct = () => {
     const [valuecart, setValuecart] = useState()
 
 
+
+    // cart data store in localstorage 
     function AddtoCartFucntion() {
-
         Dispatch(addtoCart(singleproduct))
+
     }
-
-
-
     // Single product get api function
-
     const GetSingleProduct = async () => {
         try {
             const reponse = await SingleProdtGet({ id: path.id })
@@ -40,6 +38,8 @@ const AboutProduct = () => {
     }
     useEffect(() => {
         GetSingleProduct()
+
+
     }, [path.id])
 
 
@@ -52,12 +52,11 @@ const AboutProduct = () => {
                     </GridItem>
                     <GridItem>
                         <Box>
-
                             <Text fontSize={"40px"}>{singleproduct.name}</Text>
                             <Text fontSize={"30px"}>{singleproduct.price} </Text>
                         </Box>
                         <Box mt={"10px"}>
-                            <Select w={"25%"} fontSize={"18px"} onChange={(e) => { setValuecart(e.target.value) }} placeholder='Quantity'>
+                            <Select w={"25%"} fontSize={"18px"} onChange={(e) => { setValuecart(e.target.value) }}>
                                 <option value='1'> 1</option>
                                 <option value='2'>2</option>
                                 <option value='3'>3</option>
