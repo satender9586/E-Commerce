@@ -1,4 +1,4 @@
-import productModel from "../models/productModel.js"; // Make sure the path to your model is correct
+import productModel from "../models/productModel.js"; 
 
 
 const addProduct = async (req, res) => {
@@ -43,8 +43,6 @@ const getSingleProduct = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 };
-
-
 
 
 export { addProduct, getAllProduct, getSingleProduct };

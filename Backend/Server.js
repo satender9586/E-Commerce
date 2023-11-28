@@ -6,6 +6,7 @@ import morgan from "morgan";
 import connectDB from "./Config/db.js"
 import authroutes from "./routes/authroutes.js"
 import productrouts from "./routes/productRoutes.js"
+import shippingroute from "./routes/shippingroute.js"
 import cors from "cors"
 
 dotenv.config();
@@ -21,6 +22,7 @@ app.use(morgan('dev'))
 
 app.use("/api/v1/auth", authroutes)
 app.use("/api/v1/product", productrouts)
+app.use("/api/v1/product/shipping", shippingroute)
 
 
 app.get("/", (req, res) => {
