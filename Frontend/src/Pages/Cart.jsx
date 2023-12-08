@@ -22,15 +22,21 @@ const Cart = () => {
   const Navigate = useNavigate();
   const CartDatas = useSelector((state) => state.cart);
   const Dispatch = useDispatch();
-  const [valuecart, setValuecart] = useState();
+
+  console.log(CartDatas, "cart");
 
   const NavigateonShippingFun = () => {
     return Navigate("/shipping");
   };
 
+  // quantit increase funtion
+  function AddtoCartFucntion() {
+    Dispatch(addtoCart(singleproduct));
+  }
+
   return (
     <Layout>
-      <Box p={"0 5%"} height={"100vh"}>
+      <Box p={"0 5%"} width={{ base: "100vh", md: "100%" }}>
         <Box mt={"1rem"}>
           <Text fontSize={"50px"} fontWeight={"500"} textAlign={"center"}>
             Shopping Cart
@@ -42,6 +48,7 @@ const Cart = () => {
               {CartDatas?.items?.map((data, value) => (
                 <>
                   <Card
+                    key={value}
                     direction={{ base: "column", sm: "column" }}
                     overflow="hidden"
                     variant="outline"
@@ -50,11 +57,10 @@ const Cart = () => {
                     <CardBody>
                       <Box display={"flex"} gap={4}>
                         <Box borderRadius={"5"} w={"25%"}>
-                          {/* <Image w="100%" borderRadius={"5"} src={data.image}></Image> */}
                           <Image
                             w="100%"
                             borderRadius={"5"}
-                            src={"C:UsersAdminPicturesScreenshots"}
+                            src={data.image}
                           ></Image>
                         </Box>
                         <Box>
@@ -66,20 +72,28 @@ const Cart = () => {
                           </Text>
                         </Box>
                         <Box mt={"10px"}>
-                          <Select
-                            w={"100%"}
-                            value={data.quantity}
-                            onChange={(e) => {
-                              setValuecart(e.target.value);
-                            }}
-                            fontSize={"18px"}
-                          >
-                            <option value="1"> 1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4"> 4</option>
-                            <option value="5">5</option>
-                          </Select>
+                          <Box>
+                            <Box
+                              display={"flex"}
+                              gap={2}
+                              alignItems={"center"}
+                              bgColor={"gray.500"}
+                              width={"fit-content"}
+                            >
+                              <Button colorScheme="blue">-</Button>
+                              <Box>
+                                <Text fontSize={"25px"} color={"white"}>
+                                  {data.quantity}
+                                </Text>
+                              </Box>
+                              <Button
+                                colorScheme="blue"
+                                onClick={AddtoCartFucntion}
+                              >
+                                +
+                              </Button>
+                            </Box>
+                          </Box>
                         </Box>
                         <Box mt={"10px"}>
                           <Button
@@ -177,7 +191,15 @@ const Cart = () => {
                 </Card>
               )}
               <Box>
-                <Button onClick={NavigateonShippingFun}>Place Order</Button>
+                <Button
+                  bg={"blue.500"}
+                  variant={"none"}
+                  color={"white"}
+                  mt={"0.5rem"}
+                  onClick={NavigateonShippingFun}
+                >
+                  Place Order
+                </Button>
               </Box>
             </Box>
           </Box>

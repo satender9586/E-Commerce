@@ -1,9 +1,8 @@
-import { Box, Button, Grid, GridItem, Select } from "@chakra-ui/react";
+import { Box, Button, Grid, GridItem } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Layout from "../Layout/Layout";
-
 import { Image, Text } from "@chakra-ui/react";
 import HomeProducts from "./HomeProducts";
 import { SingleProdtGet } from "../../Api/getApi";
@@ -13,18 +12,16 @@ import { addtoCart } from "../redux/slice/CartSlice";
 const AboutProduct = () => {
   const path = useParams();
   const Dispatch = useDispatch();
+  const [quantityIncDec, setQuantityIncDec] = useState(0);
   const [singleproduct, setSingleProduct] = useState("");
   const { data, status, error } = useSelector((state) => state.product);
   const product = data?.data?.products;
   const datas = useSelector((state) => state.cart);
-  console.log("cartdata", datas);
-  const [valuecart, setValuecart] = useState();
-
-  console.log("value cart", valuecart);
 
   // cart data store in localstorage
   function AddtoCartFucntion() {
     Dispatch(addtoCart(singleproduct));
+    setQuantityIncDec(quantityIncDec + 1);
   }
   // Single product get api function
   const GetSingleProduct = async () => {
@@ -56,19 +53,25 @@ const AboutProduct = () => {
               <Text fontSize={"30px"}>{singleproduct.price} </Text>
             </Box>
             <Box mt={"10px"}>
-              <Select
-                w={"25%"}
-                fontSize={"18px"}
-                onChange={(e) => {
-                  setValuecart(e.target.value);
-                }}
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </Select>
+              <Box>
+                <Box
+                  display={"flex"}
+                  gap={2}
+                  alignItems={"center"}
+                  bgColor={"gray.500"}
+                  width={"fit-content"}
+                >
+                  <Button colorScheme="blue">-</Button>
+                  <Box>
+                    <Text fontSize={"25px"} color={"white"}>
+                      {quantityIncDec}
+                    </Text>
+                  </Box>
+                  <Button colorScheme="blue" onClick={AddtoCartFucntion}>
+                    +
+                  </Button>
+                </Box>
+              </Box>
             </Box>
             <Box mt={"10px "}>
               <Button onClick={AddtoCartFucntion} colorScheme="blue">

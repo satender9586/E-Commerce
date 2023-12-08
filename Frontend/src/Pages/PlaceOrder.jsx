@@ -24,8 +24,10 @@ import {
   Stepper,
   useSteps,
 } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 
 const PlaceOrder = () => {
+  const datas = useSelector((state) => state.userProfileData);
   const [formerror, setformError] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [formData, setformData] = useState({
@@ -38,6 +40,7 @@ const PlaceOrder = () => {
     landmark: "",
   });
 
+  console.log(datas);
   //   -------------from data collect from input field-------
 
   const inputfielddataCollectHandler = (e) => {
@@ -107,8 +110,7 @@ const PlaceOrder = () => {
                         name="name"
                         py={"25px"}
                         type="text"
-                        value={formData.name}
-                        onChange={inputfielddataCollectHandler}
+                        value={datas[1].name}
                       ></Input>
                       <Text color={"red"}>{formerror.name}</Text>
                     </Box>
@@ -120,8 +122,7 @@ const PlaceOrder = () => {
                         name="phone"
                         py={"25px"}
                         type="number"
-                        value={formData.phone}
-                        onChange={inputfielddataCollectHandler}
+                        value={datas[1].phone}
                       ></Input>
                       <Text color={"red"}>{formerror.phone}</Text>
                     </Box>
@@ -152,7 +153,7 @@ const PlaceOrder = () => {
                       placeholder="Address"
                       resize={"none"}
                       name="address"
-                      value={formData.address}
+                      value={datas[1].address}
                       onChange={inputfielddataCollectHandler}
                     ></Textarea>
                   </Stack>
